@@ -3,6 +3,7 @@ package com.incomm.vms.tools.ordersimulator;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Backend {
@@ -48,5 +49,12 @@ public class Backend {
                 "  order by cap_serial_number asc";
 
         return jdbcTemplate.queryForList(ACK_SQL, new MapSqlParameterSource("orderIds", orderIds), String.class);
+    }
+
+    public List<String> fetchpendingOrders() {
+
+        String PENDING_ORDER_ID_SQL = "SELECT VOD_ORDER_ID FROM VMSCMS.VMS_ORDER_DETAILS WHERE VOD_ORDER_STATUS = 'CCF_Generated'";
+
+        return jdbcTemplate.queryForList(PENDING_ORDER_ID_SQL, new MapSqlParameterSource(Collections.emptyMap()), String.class);
     }
 }

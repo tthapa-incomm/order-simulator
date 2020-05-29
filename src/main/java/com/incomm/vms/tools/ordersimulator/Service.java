@@ -80,4 +80,9 @@ public class Service {
             throw new RuntimeException(e);
         }
     }
+
+    public List<String> fetchPendingOrders()
+    {
+        return backend.fetchpendingOrders();
+    }
 }

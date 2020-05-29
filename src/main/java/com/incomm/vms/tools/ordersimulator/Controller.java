@@ -1,5 +1,6 @@
 package com.incomm.vms.tools.ordersimulator;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class Controller {
 
     @Autowired
@@ -34,7 +36,7 @@ public class Controller {
 
         String returnFile = service.processAck(orderIds, returnFilePath);
         String shipmentFile = service.processShipment(orderIds, shipmentFilePath);
-
+        log.info("Files generated sucessfully");
         return ResponseEntity.ok(Arrays.asList(returnFile, shipmentFile));
     }
 }

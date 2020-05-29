@@ -7,13 +7,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.sql.DataSource;
 
 @SpringBootApplication
+@EnableScheduling
 public class OrderSimulatorApplication {
 
-    @Value("${spring.datasource.driver-class-name}")
+   /* @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
 
     @Value("${spring.datasource.url}")
@@ -23,22 +25,22 @@ public class OrderSimulatorApplication {
     private String datasourceUserName;
 
     @Value("${spring.datasource.password}")
-    private String datasourcePassword;
+    private String datasourcePassword;*/
 
-    @Autowired
-    private NamedParameterJdbcTemplate jdbcTemplate;
+   /* @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;*/
 
     @Bean
-    public Backend db() {
+    public Backend db(NamedParameterJdbcTemplate jdbcTemplate) {
         return new Backend(jdbcTemplate);
     }
 
     @Bean
-    public Service service() {
-        return new Service(db());
+    public Service service(Backend db) {
+        return new Service(db);
     }
 
-    @Bean
+   /* @Bean
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName(driverClassName);
@@ -46,7 +48,7 @@ public class OrderSimulatorApplication {
         dataSourceBuilder.username(datasourceUserName);
         dataSourceBuilder.password(datasourcePassword);
         return dataSourceBuilder.build();
-    }
+    }*/
 
     public static void main(String[] args) {
         SpringApplication.run(OrderSimulatorApplication.class, args);
