@@ -15,7 +15,7 @@ public class Backend {
     }
 
     public List<String> getShippingDetails(List<String> orderIds) {
-        String SHIP_SQL = "  select 'Incomm'||','||'1454123'||','||vod_parent_oid||','||vod_order_id||','||TO_CHAR(sysdate, 'MM/DD/YYYY')||','||cap_serial_number||','||'1'||','||vol_package_id||','||'GC '||''||','||'Incomm'||','||'Incomm'||','||'250 Williams Street Suite 500'||','||','||'Atlanta'||','||'GA'||','||'30303'||','||'122816215025810'||','||TO_CHAR(sysdate, 'MM/DD/YYYY')||','||'N/A'||','||VSM_SHIPMENT_ID||','||vod_shiPPING_METHOD as details\n" +
+        String SHIP_SQL = "  select 'Incomm'||','||'1454123'||','||vod_parent_oid||','||vod_order_id||','||TO_CHAR(sysdate, 'MM/DD/YYYY')||','||cap_serial_number||','||'1'||','||vol_package_id||','||'GC '||''||','||'Incomm'||','||'Incomm'||','||'250 Williams Street Suite 500'||','||','||'Atlanta'||','||'GA'||','||'30303'||','||'122816215025810'||','||TO_CHAR(sysdate, 'MM/DD/YYYY')||','||'N/A'||',1' as details\n" +
                 "  from vmscms.VMS_ORDER_DETAILS,vmscms.VMS_ORDER_LINEITEM,vmscms.VMS_LINE_ITEM_DTL,vmscms.cms_appl_pan,VMSCMS.VMS_SHIPMENT_TRAN_MAST\n" +
                 "  where vod_order_id=vol_order_id\n" +
                 "  and vod_partner_id=vol_partner_id\n" +

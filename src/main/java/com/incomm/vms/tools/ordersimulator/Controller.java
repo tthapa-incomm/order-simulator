@@ -1,7 +1,6 @@
 package com.incomm.vms.tools.ordersimulator;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +15,17 @@ import java.util.List;
 @Slf4j
 public class Controller {
 
-    @Autowired
-    private Service service;
+    private final Service service;
 
     @Value("${return.file.path}")
     private String returnFilePath;
 
     @Value("${shipment.file.path}")
     private String shipmentFilePath;
+
+    public Controller(Service service) {
+        this.service = service;
+    }
 
     @PostMapping(value = "/tools/b2b-orders/complete",
             consumes = {MediaType.APPLICATION_JSON_VALUE},

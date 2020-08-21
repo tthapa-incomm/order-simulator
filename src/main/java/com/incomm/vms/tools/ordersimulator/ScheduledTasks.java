@@ -1,7 +1,6 @@
 package com.incomm.vms.tools.ordersimulator;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,14 +11,17 @@ import java.util.List;
 @Slf4j
 public class ScheduledTasks {
 
-    @Autowired
-    private Service service;
+    private final Service service;
 
     @Value("${return.file.path}")
     private String returnFilePath;
 
     @Value("${shipment.file.path}")
     private String shipmentFilePath;
+
+    public ScheduledTasks(Service service) {
+        this.service = service;
+    }
 
 
     @Scheduled(cron = "${cron.expression}")
@@ -31,9 +33,8 @@ public class ScheduledTasks {
         log.info("Shipment and response files generated successfully ");
     }
 
-    private void processFiles(List<String> orderIds)
-    {
-        String returnFile = service.processAck(orderIds, returnFilePath);
-        String shipmentFile = service.processShipment(orderIds, shipmentFilePath);
+    private void processFiles(List<String> orderIds) {
+        service.processAck(orderIds, returnFilePath);
+        service.processShipment(orderIds, shipmentFilePath);
     }
 }

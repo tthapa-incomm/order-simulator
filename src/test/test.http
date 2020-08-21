@@ -1,6 +1,6 @@
-POST http://localhost:7007/tools/b2b-orders/complete
+POST http://10.42.49.215:7007/tools/b2b-orders/complete
 Content-Type: application/json
 
-["v0010.VBOL-v0010","e0009.BOL-e0009"]
+["SIM13843_1"]
 
 ###

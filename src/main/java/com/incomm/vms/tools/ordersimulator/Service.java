@@ -20,6 +20,24 @@ public class Service {
         this.backend = backend;
     }
 
+    private static void writeFile(String fileName, String content, String simulationOutDirectory) {
+        File directory = new File(String.valueOf(simulationOutDirectory));
+        if (!directory.exists()) {
+            boolean created = directory.mkdir();
+            log.info(String.format("%s successfully created: %b", simulationOutDirectory, created));
+        }
+        try {
+            File file = new File(fileName);
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            fileWriter.flush();
+            fileWriter.close();
+            log.info("File created :: " + fileName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public String processShipment(List<String> orderIds, String simulationOutDirectory) {
         DateFormat df = new SimpleDateFormat("MMddyyyy");
         log.info("Generating shipping file...");
@@ -63,26 +81,7 @@ public class Service {
         }
     }
 
-    private static void writeFile(String fileName, String content, String simulationOutDirectory) {
-        File directory = new File(String.valueOf(simulationOutDirectory));
-        if (!directory.exists()) {
-            Boolean created = directory.mkdir();
-            log.info(String.format("%s successfully created: %s", simulationOutDirectory, created.toString()));
-        }
-        try {
-            File file = new File(fileName);
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-            fileWriter.flush();
-            fileWriter.close();
-            log.info("File created :: " + fileName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public List<String> fetchPendingOrders()
-    {
+    public List<String> fetchPendingOrders() {
         return backend.fetchpendingOrders();
     }
 }
